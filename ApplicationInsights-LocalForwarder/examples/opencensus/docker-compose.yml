@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  local-forwarder:
+    environment:
+      APPINSIGHTS_INSTRUMENTATIONKEY: "e394b420-60e5-4b85-be36-c53a7fbfbdf6"
+    build:
+      context: ./local-forwarder
+  go-app:
+    environment:
+      OCAGENT_TRACE_EXPORTER_ENDPOINT: local-forwarder:55678
+      SERVICE_NAME: go-app
+    build:
+      context: ./go-app
+    ports:
+      - "8001:50030"
+  
